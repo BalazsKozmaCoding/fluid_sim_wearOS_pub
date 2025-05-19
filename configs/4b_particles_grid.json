@@ -1,0 +1,19 @@
+{
+  "timeScale": 1.5,
+  "overRelax": 1.9,
+  "flipRatio": 0.9,
+  "showParticles": true,
+  "showGrid": true,
+  "compensateDrift": true,
+  "separateParticles": true,
+  "pressureIters": 30,
+  "particleIters": 2,
+  "particleCount": 2200,
+  "obstacleRadius": 0.45,
+  "particleRadiusRatio": 0.23,
+  "gravityMagnitude": 9.81,
+  "cellsWide": 50,
+  "renderScale": 1.1,
+  "debug": true,
+  "enableDynamicColoring": false
+}
