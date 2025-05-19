@@ -1,4 +1,3 @@
-// lib/models.dart
 
 import 'pixel_clock_style.dart';
 

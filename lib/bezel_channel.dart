@@ -3,11 +3,11 @@ import 'dart:async';
 
 class BezelChannelService {
   static const MethodChannel _channel =
-      MethodChannel('com.example.water_slosher/bezel'); // Must match native
+      MethodChannel('com.example.water_slosher/bezel');
 
   final StreamController<double> _bezelEventsController =
       StreamController<double>.broadcast();
-  bool _firstBezelEventSkipped = false; // Added flag
+  bool _firstBezelEventSkipped = false;
 
   Stream<double> get bezelEvents => _bezelEventsController.stream;
 
@@ -21,7 +21,7 @@ class BezelChannelService {
       if (delta != null) {
         if (!_firstBezelEventSkipped) {
           _firstBezelEventSkipped = true;
-          return; // Skip the first event
+          return;
         }
         _bezelEventsController.add(delta);
       }

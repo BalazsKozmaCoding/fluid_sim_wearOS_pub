@@ -4,9 +4,9 @@ import 'dart:typed_data'; // Import for Float32List, Int32List
 import 'simulation_screen.dart'; // Import SimOptions
 import 'flip_fluid_simulation.dart';
 import 'dart:math' as math;
-import 'clock_utils.dart'; // Added for pixel clock patterns
-import 'pixel_clock_style.dart'; // Added for pixel clock config
-import 'models.dart'; // Added for SimulationConfig
+import 'clock_utils.dart';
+import 'pixel_clock_style.dart';
+import 'models.dart';
 
 class ParticleRenderer extends CustomPainter {
   final FlipFluidSimulation sim;
@@ -15,7 +15,7 @@ class ParticleRenderer extends CustomPainter {
   bool showTouchCircle = false;            // draw the obstacle circle
   bool isNight = true; // track day/night mode
 
-  ParticleRenderer(this.sim, {this.particleAtlas}); // Update constructor
+  ParticleRenderer(this.sim, {this.particleAtlas});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -48,7 +48,6 @@ class ParticleRenderer extends CustomPainter {
     canvas.translate(centerX, centerY);
     canvas.scale(simOptions.renderScale, simOptions.renderScale); // Use renderScale from SimOptions
     canvas.translate(-centerX, -centerY);
-    // --- End Apply renderScale ---
 
     // Draw grid if enabled (now within the scaled canvas state)
     if (simOptions.showGrid) {
@@ -136,7 +135,6 @@ class ParticleRenderer extends CustomPainter {
     if (simOptions.showParticles) {
       final int particleCount = sim.numParticles;
       if (particleCount > 0) {
-        // --- New logic: Group particles by actual quantized color and use drawRawPoints ---
         final double particleDiameter = sim.particleRadius * scale * 2.0;
         final particlePaint = Paint()
           ..strokeCap = StrokeCap.square
@@ -224,13 +222,10 @@ class ParticleRenderer extends CustomPainter {
             canvas.drawRawPoints(ui.PointMode.points, pointBuffer, particlePaint);
           }
         });
-        // --- End new logic ---
       }
     }
 
-    // --- Restore canvas before drawing UI elements ---
     canvas.restore();
-    // --- End Restore canvas ---
 
     // Draw touch-obstacle circle when finger is down (drawn outside the scaled state)
     if (showTouchCircle) {

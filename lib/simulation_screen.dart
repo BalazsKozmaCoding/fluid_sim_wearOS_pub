@@ -13,7 +13,7 @@ import 'bezel_channel.dart'; // Added for rotary input
 import 'dart:async'; // Added for StreamSubscription
 import 'dart:convert'; // Added for jsonDecode
 import 'package:http/http.dart' as http;
-import 'dart:developer' as devLog; // Corrected alias usage
+import 'dart:developer' as devLog;
 import 'dart:ui' as ui; // Added for ui.Image
 import 'models.dart'; // Added for SimulationConfig
 
@@ -500,7 +500,6 @@ void _startClockTimer() {
   double _elapsedTimeInSeconds = 0;
   double _fps = 0;
   DateTime _lastTimestamp = DateTime.now();
-  // double _temperature = 25.0; // Already defined above
 
   void _onTick(Duration elapsed) {
     if (!running || !_isInitialized) return;
@@ -640,7 +639,6 @@ void _startClockTimer() {
         compensateDrift: simOptions.simulationConfig.compensateDrift,
         separateParticles: simOptions.simulationConfig.separateParticles,
         enableDynamicColoring: simOptions.simulationConfig.enableDynamicColoring,
-        // Update the toggled value
         usePixelatedClock: newPixelatedState,
       );
 
@@ -792,7 +790,6 @@ void _startClockTimer() {
                           alignment: Alignment.center,
                           children: [
                             Center(child: Text('Slosh O\'Clock', style: TextStyle(color: (isNight ? Colors.white : Colors.black).withOpacity(0.4), fontSize: 16, fontWeight: FontWeight.bold))),
-                            // Day/Night button has been moved and its style updated
                           ],
                         ),
                       ),
@@ -824,7 +821,6 @@ void _startClockTimer() {
                           FloatingActionButton(
                             heroTag: 'turn_off_app',
                             backgroundColor: Colors.blue.withOpacity(0.3), foregroundColor: Colors.white,
-                            // mini: true, // Removed to match size of other buttons
                             child: const Icon(Icons.power_settings_new),
                             onPressed: _turnOffApp,
                           ),
@@ -832,7 +828,6 @@ void _startClockTimer() {
                           FloatingActionButton(
                             heroTag: 'watch_style',
                             backgroundColor: Colors.blue.withOpacity(0.3), foregroundColor: Colors.white,
-                            // mini: true, // Removed to match size of other buttons
                             child: const Icon(Icons.watch_later),
                             onPressed: _cycleWatchStyle,
                           ),
@@ -840,7 +835,6 @@ void _startClockTimer() {
                       ),
                     ),
                   ),
-                  // New Day/Night Toggle Button
                   Visibility(
                     visible: !_isNativeTouchMode, // Only visible in config mode
                     child: Align(
@@ -850,8 +844,8 @@ void _startClockTimer() {
                         child: IconButton(
                           icon: Icon(
                             isNight ? Icons.dark_mode : Icons.light_mode,
-                            color: (isNight ? Colors.white : Colors.black).withOpacity(0.3), // Adjusted transparency
-                            size: 30.0, // Slightly larger icon
+                            color: (isNight ? Colors.white : Colors.black).withOpacity(0.3),
+                            size: 30.0,
                           ),
                           onPressed: () => setState(() => isNight = !isNight),
                         ),
@@ -860,7 +854,7 @@ void _startClockTimer() {
                   ),
                   if (simOptions.debug && !_isNativeTouchMode)
                     Positioned(
-                      top: 150, // Adjusted to be below new buttons if debug is on
+                      top: 150,
                       left: _calculateCircularLeftOffset(size, 50),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -909,7 +903,7 @@ void _startClockTimer() {
 }
 
 class SimOptions {
-  SimulationConfig simulationConfig; // Added field
+  SimulationConfig simulationConfig;
 
   double timeScale = 1.0;
   double overRelax = 1.9;
@@ -927,7 +921,7 @@ class SimOptions {
   int cellsWide = 64;
   double renderScale = 1.0;
   bool debug = false;
-  bool enableDynamicColoring = false; // Added field
+  bool enableDynamicColoring = false;
   double intensityMin = 0.0; // Default min intensity for particle color
   double intensityMax = 150.0; // Default max intensity for particle color
 

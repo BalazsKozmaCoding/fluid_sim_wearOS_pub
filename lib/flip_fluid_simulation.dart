@@ -1,11 +1,10 @@
-// lib/simulation/flip_fluid_simulation.dart
 
 import 'dart:ffi';
 import 'dart:io' show Platform;
 import 'dart:typed_data';
 import 'dart:math' as math;
-import 'package:ffi/ffi.dart' as ffiMemory; // Changed alias
-import 'dart:developer' as devLog; // Changed alias
+import 'package:ffi/ffi.dart' as ffiMemory;
+import 'dart:developer' as devLog;
 
 // --- FFI Bindings Setup ---
 typedef SolveIncompressibilityNative = Void Function(
@@ -108,26 +107,19 @@ typedef TransferVelocitiesDart = void Function(
     int numParticles
 );
 
-typedef UpdateParticleDensityGridNative = Void Function( // Renamed
+typedef UpdateParticleDensityGridNative = Void Function(
     Int32 numParticles, Float particleRestDensity, Float invH,
     Int32 fNumX, Int32 fNumY, Float h,
     Pointer<Float> particlePos,
-    // Pointer<Int32> cellType, // Was unused in C++, removed from C++ signature
     Pointer<Float> particleDensityGrid
-    // Pointer<Float> particleColor, // REMOVED
-    // Bool enableDynamicColoring // REMOVED
 );
-typedef UpdateParticleDensityGridDart = void Function( // Renamed
+typedef UpdateParticleDensityGridDart = void Function(
     int numParticles, double particleRestDensity, double invH,
     int fNumX, int fNumY, double h,
     Pointer<Float> particlePos,
-    // Pointer<Int32> cellType, // Was unused in C++, removed from C++ signature
     Pointer<Float> particleDensityGrid
-    // Pointer<Float> particleColor, // REMOVED
-    // bool enableDynamicColoring // REMOVED
 );
 
-// New typedefs for dynamic color updates
 typedef UpdateDynamicParticleColorsNative = Void Function(
     Int32 numParticles, Float particleRestDensity, Float invH,
     Int32 fNumX, Int32 fNumY, Float h,
@@ -190,8 +182,8 @@ class _SimulationFFI {
   late final SolveIncompressibilityDart solveIncompressibility;
   late final PushParticlesApartDart pushParticlesApart;
   late final TransferVelocitiesDart transferVelocities;
-  late final UpdateParticleDensityGridDart updateParticleDensityGrid; // Renamed
-  late final UpdateDynamicParticleColorsDart updateDynamicParticleColors; // New
+  late final UpdateParticleDensityGridDart updateParticleDensityGrid;
+  late final UpdateDynamicParticleColorsDart updateDynamicParticleColors;
   late final HandleCollisionsDart handleCollisions;
   late final DiffuseParticleColorsDart diffuseParticleColors;
 
@@ -209,14 +201,14 @@ class _SimulationFFI {
         .lookup<NativeFunction<TransferVelocitiesNative>>(
             'transferVelocities_native')
         .asFunction<TransferVelocitiesDart>(isLeaf: true);
-    updateParticleDensityGrid = _dylib // Renamed
-        .lookup<NativeFunction<UpdateParticleDensityGridNative>>( // Renamed
-            'updateParticleDensityGrid_native') // Renamed C++ function name
-        .asFunction<UpdateParticleDensityGridDart>(isLeaf: true); // Renamed
-    updateDynamicParticleColors = _dylib // New
-        .lookup<NativeFunction<UpdateDynamicParticleColorsNative>>( // New
-            'updateDynamicParticleColors_native') // New C++ function name
-        .asFunction<UpdateDynamicParticleColorsDart>(isLeaf: true); // New
+    updateParticleDensityGrid = _dylib
+        .lookup<NativeFunction<UpdateParticleDensityGridNative>>(
+            'updateParticleDensityGrid_native')
+        .asFunction<UpdateParticleDensityGridDart>(isLeaf: true);
+    updateDynamicParticleColors = _dylib
+        .lookup<NativeFunction<UpdateDynamicParticleColorsNative>>(
+            'updateDynamicParticleColors_native')
+        .asFunction<UpdateDynamicParticleColorsDart>(isLeaf: true);
     handleCollisions = _dylib
         .lookup<NativeFunction<HandleCollisionsNative>>(
             'handleCollisions_native')
@@ -732,7 +724,7 @@ class FlipFluidSimulation {
       try {
         _nativeParticleColorPtr.asTypedList(particleColor.length).setAll(0, particleColor);
         
-        double colorDiffusionCoefficient = 0.001; // From JS
+        double colorDiffusionCoefficient = 0.001;
 
         _ffi.diffuseParticleColors(
             _nativeParticlePosPtr, // Assumed to be up-to-date in native memory from pushParticlesApart
@@ -817,16 +809,12 @@ class FlipFluidSimulation {
     try {
       // Update particle density grid (always done)
       _nativeParticlePosPtr.asTypedList(particlePos.length).setAll(0, particlePos);
-      // _nativeCellTypePtr.asTypedList(cellType.length).setAll(0, cellType); // Not needed for density grid update
 
       _ffi.updateParticleDensityGrid( // Renamed
           numParticles, particleRestDensity, fInvSpacing,
           fNumX, fNumY, h,
           _nativeParticlePosPtr,
-          // _nativeCellTypePtr, // Not needed
           _nativeParticleDensityPtr
-          // _nativeParticleColorPtr, // Removed
-          // this.enableDynamicColoring // Removed
       );
       particleDensity.setAll(0, _nativeParticleDensityPtr.asTypedList(particleDensity.length));
 
@@ -834,14 +822,12 @@ class FlipFluidSimulation {
       if (this.enableDynamicColoring) {
         _nativeParticleColorPtr.asTypedList(particleColor.length).setAll(0, particleColor);
         // particlePos and particleDensityGrid are already in native memory from the previous call or earlier steps.
-        // No need to copy particlePos again if it hasn't changed.
-        // particleDensityGrid was just updated in native memory.
 
         _ffi.updateDynamicParticleColors(
             numParticles, particleRestDensity, fInvSpacing,
             fNumX, fNumY, h,
-            _nativeParticlePosPtr, // Assumed up-to-date
-            _nativeParticleDensityPtr, // Is up-to-date
+            _nativeParticlePosPtr,
+            _nativeParticleDensityPtr,
             _nativeParticleColorPtr
         );
         particleColor.setAll(0, _nativeParticleColorPtr.asTypedList(particleColor.length));
