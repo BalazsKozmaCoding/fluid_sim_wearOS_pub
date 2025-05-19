@@ -4,9 +4,9 @@ An interactive fluid dynamics simulation demonstration for Wear OS devices with 
 
 ## Acknowledgements
 
-This project is adapted to Flutter and wearOS based on the original html demo of FLIP water simulation by Matthias Müller:
+Based on the original FLIP water simulation HTML demo by Matthias Müller:
 [https://matthias-research.github.io/pages/tenMinutePhysics/](https://matthias-research.github.io/pages/tenMinutePhysics/) (Section 18).
-This version is adapted for mobile devices with accelerometer and touch input support.
+This version was adapted to Wear OS in Flutter, with input handling tailored to wearable devices.
 
 ## License
 
