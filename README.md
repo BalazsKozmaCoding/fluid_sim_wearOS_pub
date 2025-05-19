@@ -1,6 +1,6 @@
 # Slosh O'Clock wearOS App
 
-An interactive fluid dynamics simulation demonstration for Wear OS devices with accelerometers and touch inputs, serving as a testbed for AI-assisted code development, primarily utilizing Gemini 2.5 Pro.
+An interactive fluid dynamics simulation demonstration for Wear OS devices with accelerometer and touch input support, developed as a testbed for AI-assisted coding using Gemini 2.5 Pro.
 
 ## Acknowledgements
 
