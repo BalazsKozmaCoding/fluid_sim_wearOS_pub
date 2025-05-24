@@ -12,7 +12,6 @@ To set up and run this project on your local machine, follow these steps:
     git clone https://github.com/BalazsKozmaCoding/fluid_sim_wearOS_pub.git 
     cd fluid_sim_wearOS_pub
     ```
-    *(Replace `https://github.com/BalazsKozmaCoding/fluid_sim_wearOS_pub.git` with the actual repository URL if different)*
 3.  **Install dependencies:**
     ```bash
     flutter pub get
