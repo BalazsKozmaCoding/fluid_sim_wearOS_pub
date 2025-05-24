@@ -9,10 +9,10 @@ To set up and run this project on your local machine, follow these steps:
 1.  **Install Flutter SDK:** If you haven't already, install the Flutter SDK by following the official instructions: [https://docs.flutter.dev/get-started/install](https://docs.flutter.dev/get-started/install)
 2.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/slosh-oclock-wearos.git 
-    cd slosh-oclock-wearos
+    git clone https://github.com/BalazsKozmaCoding/fluid_sim_wearOS_pub.git 
+    cd fluid_sim_wearOS_pub
     ```
-    *(Replace `https://github.com/your-username/slosh-oclock-wearos.git` with the actual repository URL if different)*
+    *(Replace `https://github.com/BalazsKozmaCoding/fluid_sim_wearOS_pub.git` with the actual repository URL if different)*
 3.  **Install dependencies:**
     ```bash
     flutter pub get
